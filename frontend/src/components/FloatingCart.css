@@ -1,0 +1,29 @@
+.floating-cart {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  z-index: 2000;
+}
+
+.cart-details {
+  display: flex;
+  gap: 10px;
+  font-weight: bold;
+}
+
+.view-cart {
+  background: var(--primary);
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
