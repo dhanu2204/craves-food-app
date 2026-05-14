@@ -5,8 +5,13 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   // 1. Load cart from LocalStorage when the app starts
   const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem("zslite_cart");
-    return savedCart ? JSON.parse(savedCart) : [];
+    try {
+      const savedCart = localStorage.getItem("zslite_cart");
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (e) {
+      console.error("Failed to parse cart from local storage", e);
+      return [];
+    }
   });
 
   const [restaurantId, setRestaurantId] = useState(() => {
