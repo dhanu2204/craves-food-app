@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: craves-backend
+    env: docker
+    plan: free
+    region: singapore
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: JAVA_VERSION
+        value: 21
