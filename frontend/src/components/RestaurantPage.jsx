@@ -116,7 +116,7 @@ function RestaurantPage() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+        const API_URL = import.meta.env.VITE_API_URL || "https://craves-delivery-backend.onrender.com";
         const response = await fetch(`${API_URL}/api/restaurants/all`);
         if (response.ok) {
           const data = await response.json();
