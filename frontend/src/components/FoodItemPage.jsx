@@ -54,7 +54,8 @@ function FoodItemPage() {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/restaurants/${id}`);
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+        const response = await fetch(`${API_URL}/api/restaurants/${id}`);
         if (response.ok) {
           const data = await response.json();
           setRestaurant(data);

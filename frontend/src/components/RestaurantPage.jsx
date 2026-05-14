@@ -116,7 +116,8 @@ function RestaurantPage() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/restaurants/all");
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+        const response = await fetch(`${API_URL}/api/restaurants/all`);
         if (response.ok) {
           const data = await response.json();
           setRestaurants(data); // Save data to state
