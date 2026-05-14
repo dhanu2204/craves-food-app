@@ -113,17 +113,25 @@ function RestaurantPage() {
   const [isDark, setIsDark] = useState(false);
 
   // FETCH LOGIC: Runs once when the page loads
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const loadData = async () => {
       try {
+        setError(null);
         const API_URL = import.meta.env.VITE_API_URL || "https://craves-delivery-backend.onrender.com";
+        console.log("Fetching restaurants from:", `${API_URL}/api/restaurants/all`);
         const response = await fetch(`${API_URL}/api/restaurants/all`);
         if (response.ok) {
           const data = await response.json();
+          console.log("Fetched restaurants:", data);
           setRestaurants(data); // Save data to state
+        } else {
+            setError(`Server responded with status: ${response.status} ${response.statusText}`);
         }
       } catch (error) {
         console.error("Fetch error:", error);
+        setError(`Connection Error: Could not reach the server at https://craves-delivery-backend.onrender.com. Make sure the backend is awake.`);
       }
     };
     loadData();
@@ -167,19 +175,26 @@ function RestaurantPage() {
           <h2>Delivery Restaurants in Mysuru</h2>
         </div>
         <div className="z-grid">
-          {filteredRestaurants.length > 0 ? (
+          {error && (
+            <div className="z-error-message" style={{gridColumn: '1/-1', textAlign: 'center', padding: '20px', background: '#fff5f5', border: '1px solid #feb2b2', borderRadius: '8px', color: '#c53030'}}>
+                <h3>Oops! Something went wrong</h3>
+                <p>{error}</p>
+                <button onClick={() => window.location.reload()} style={{marginTop: '10px', padding: '8px 16px', background: '#c53030', color: 'white', borderRadius: '4px'}}>Retry</button>
+            </div>
+          )}
+          {!error && filteredRestaurants.length > 0 ? (
             filteredRestaurants.map((res) => (
               <RestaurantCard
                 key={res.id}
                 id={res.id}
-                name={res.name}
-                cuisine={res.cuisine}
-                rating={res.rating}
+                name={res.name || "Unknown Restaurant"}
+                cuisine={res.cuisine || "Various"}
+                rating={res.rating || 0}
                 image={res.imageurl}
                 isveg={res.isveg}
               />
             ))
-          ) : (
+          ) : !error && (
             <div className="z-no-results">
               <h2>No Restaurants Found</h2>
               <p>Try adjusting your filters or search terms</p>

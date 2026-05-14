@@ -45,8 +45,8 @@ const Register = () => {
             alert("Error:"+ response.statusText);
         }
     }catch(error){
-        console.log("Connection error:"+error);
-        alert("Network connection , is the server running");
+        console.error("Registration error:", error);
+        alert("Connection Error: Could not connect to the backend server. Please check if the backend is awake at Render.");
     }
     }
     
