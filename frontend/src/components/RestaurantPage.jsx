@@ -131,7 +131,8 @@ function RestaurantPage() {
         }
       } catch (error) {
         console.error("Fetch error:", error);
-        setError(`Connection Error: Could not reach the server at https://craves-delivery-backend.onrender.com. Make sure the backend is awake.`);
+        const attemptedUrl = `${API_URL}/api/restaurants/all`;
+        setError(`Connection Error: Could not reach the server at ${attemptedUrl}. This usually happens if the backend is asleep, blocked by an ad-blocker, or if there is a CORS issue. Please try refreshing or checking your browser console.`);
       }
     };
     loadData();
