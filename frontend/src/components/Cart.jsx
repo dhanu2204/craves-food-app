@@ -12,7 +12,7 @@ function Cart() {
   );
 
   const handleCheckout = () => {
-    navigate("/order-success");
+    navigate("/checkout");
   };
 
   return (

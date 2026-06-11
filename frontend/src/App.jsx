@@ -5,6 +5,7 @@ import RestaurantPage from './components/RestaurantPage'
 import FoodItemPage from './components/FoodItemPage'
 import Cart from './components/Cart'
 import Login from './components/Login'
+import Checkout from './components/Checkout'
 import OrderSuccess from './components/OrderSuccess'
 import FloatingCart from './components/FloatingCart'
 import { CartProvider } from './components/CartContext'
@@ -16,11 +17,17 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/Home" element={<RestaurantPage/>} />
+          <Route path="/home" element={<RestaurantPage/>} />
           <Route path="/restaurant/:id" element={<FoodItemPage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/Checkout" element={<Checkout />} />
           <Route path="/order-success" element={<OrderSuccess />} />
           <Route path="/" element={<Register />} />
+          <Route path="*" element={<Register />} />
         </Routes>
         <FloatingCart />
       </BrowserRouter>

@@ -27,7 +27,8 @@ const Register = () => {
             role:role,
         }
     try{
-        const response = await fetch("https://craves-delivery-backend.onrender.com/api/users/register",{
+        const API_URL = import.meta.env.VITE_API_URL || "https://craves-delivery-backend.onrender.com";
+        const response = await fetch(`${API_URL}/api/users/register`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

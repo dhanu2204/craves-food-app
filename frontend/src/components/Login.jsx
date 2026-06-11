@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "./Login.css"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -18,7 +18,8 @@ const Login = () => {
 
     const userCredintial={email:email,password:password}
     try{
-      const response = await fetch("https://craves-delivery-backend.onrender.com/api/users/login",{
+      const API_URL = import.meta.env.VITE_API_URL || "https://craves-delivery-backend.onrender.com";
+      const response = await fetch(`${API_URL}/api/users/login`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,17 +30,19 @@ const Login = () => {
       });
 
       if (response.ok) {
-    const user = await response.json(); // Use .json() instead of .text()
-    
-    if (user) {
-        alert("Login Successful! Welcome " + user.name);
-        navigate("/Home");
-    } else {
-        alert("Invalid Email or Password. Please try again.");
-    }
-} else {
-    alert("Server error. Please try again later.");
-}
+        const text = await response.text();
+        const user = text ? JSON.parse(text) : null;
+        
+        if (user) {
+            localStorage.setItem("zslite_user", JSON.stringify(user));
+            alert("Login Successful! Welcome " + user.name);
+            navigate("/Home");
+        } else {
+            alert("Invalid Email or Password. Please try again.");
+        }
+      } else {
+        alert("Server error. Please try again later.");
+      }
 }
     catch(error){
       console.log("Connection error:"+error);
@@ -50,7 +53,7 @@ const Login = () => {
   return (
     <div className="auth-main-wrapper">
       <div className="auth-container">
-        <form className="auth-form" action="">
+        <form className="auth-form" onSubmit={handleLogin}>
           <h2>Sign In</h2>
 
           <div className="input-group">
@@ -76,11 +79,11 @@ const Login = () => {
           </div>
 
           <div className="btn-div">
-            <button type="submit" className="auth-btn" onClick={handleLogin}>Sign In</button>
+            <button type="submit" className="auth-btn">Sign In</button>
           </div>
 
           <p className="auth-footer-text">
-            Don't have an account? <a href="/" className="auth-link">Sign Up</a>
+            Don't have an account? <Link to="/" className="auth-link">Sign Up</Link>
           </p>
         </form>
       </div>
